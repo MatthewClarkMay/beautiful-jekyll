@@ -25,8 +25,8 @@ description: The tortuous works of a security professional
 navbar-links:
   About Me: "aboutme"
   Resources:
-    - Blue Team Tools: ""
-    - Red Team Tools: ""
+    - Blue Team: "blue-team-links"
+    - Red Team: "red-team-links"
     - GitHub Pages: "https://pages.github.com/"
     - Learn markdown: "http://www.markdowntutorial.com/"
   Projects: "projects"
