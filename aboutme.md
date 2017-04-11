@@ -1,16 +1,44 @@
 ---
 layout: page
-title: About me
-subtitle: Why you'd want to go on a date with me
+title: About Me
 ---
 
-My name is Inigo Montoya. I have the following qualities:
+My name is Matt May; I love craft beer, fine bourbon, and technology. I spend the majority of my time dabbling in open source, data science, and security.
 
-- I rock a great mustache
-- I'm extremely loyal to my family
+---
 
-What else do you need?
+# Education / Certifications
+- University of South Carolina: Bachelor of Science - Integrated Information Technology
+- Nexpose Certified Administrator - Rapid7
+- Metasploit Pro Certified Specialist - Rapid7
 
-### my history
+---
 
-To be honest, I'm having some trouble remembering right now, so why don't you just watch [my movie](http://en.wikipedia.org/wiki/The_Princess_Bride_%28film%29) and it will answer **all** your questions.
+# Skills
+
+### Scripting / Programming / Development / APIs
+- Bash
+- Powershell
+- Python
+- JavaScript (leaflet, D3)
+- Visual Basic
+- HTML/CSS
+- REST
+- Redis
+- MapBox
+- MongoDB
+- ELK Stack (Elasticsearch, Logstash, Kibana, Beats)
+
+### Tools / Technologies / Skillsets
+- Linux
+- VMware
+- Web Servers/Proxies: Cisco WSA/ESA, nginx, Apache
+- Firewalls: Palo Alto, ASA, Endian, pfSense, firewalld, iptables
+- PhishMe Triage
+- Carbon Black Protect
+- Carbon Black Response
+- SIEMs: QRadar
+- IDS: Bro, Snort, Suricata
+- Scanners: Nexpose Vulnerability Scanner, OpenVAS, nmap
+- Traffic/PCAP Analysis
+
