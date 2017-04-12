@@ -25,6 +25,7 @@ description: The tortuous works of a security professional
 navbar-links:
   About Me: "aboutme"
   Projects: "projects"
+  Archive: "archive"
   Resources:
     - Blue Team: "blue-team-links"
     - Red Team: "red-team-links"
