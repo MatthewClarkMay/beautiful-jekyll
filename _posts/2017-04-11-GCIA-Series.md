@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Intrusion Detection In-Depth - Series Announcement
-tags: [GIAC, GCIA, Intrusion Detection, Series] 
+tags: [GCIA Series, Intrusion Detection] 
 comments: true
 ---
 
