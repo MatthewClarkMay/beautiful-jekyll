@@ -20,14 +20,15 @@ My name is Matt May; I love craft beer, fine bourbon, and technology. I spend th
 - Bash
 - Powershell
 - Python
-- JavaScript (leaflet, D3)
+- JavaScript
+  - Leaflet
+  - D3
 - Visual Basic
 - HTML/CSS
-- REST
-- Redis
 - MapBox
+- Redis
 - MongoDB
-- ELK Stack (Elasticsearch, Logstash, Kibana, Beats)
+- Jekyll
 
 ### Tools / Technologies / Skillsets
 - Linux
@@ -37,8 +38,9 @@ My name is Matt May; I love craft beer, fine bourbon, and technology. I spend th
 - PhishMe Triage
 - Carbon Black Protect
 - Carbon Black Response
-- SIEMs: QRadar
+- QRadar
+- ELK Stack (Elasticsearch, Logstash, Kibana, Beats)
 - IDS: Bro, Snort, Suricata
-- Scanners: Nexpose Vulnerability Scanner, OpenVAS, nmap
-- Traffic/PCAP Analysis
+- Scanners: Nexpose Vulnerability Scanner, OpenVAS, nmap, etc
 
+I experiment with many technologies so not everything is listed here, but this covers a lot of what I spend my time on.
