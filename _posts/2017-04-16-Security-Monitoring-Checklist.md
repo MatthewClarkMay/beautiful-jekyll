@@ -15,7 +15,7 @@ I recently listened to Eric Conrad speak at SANS in Orlando, and many of the thi
     - Elastic offers a license by node plan, rather than licencing by events per second like many vendors; is often more affordable.
     - Fast queries for only the most important logged events.
   - Also take a look at [SOF-ELK](https://github.com/philhagen/sof-elk), an attempt headed by Phil Hagen to distribute an ELK VM Appliance for security monitoring.
-- Windoes Event Forwarding: Can be used to easily collect logs (Sysmon, etc.) which can then be shipped to your ELK stack using the [Beats Data Shippers](https://www.elastic.co/products/beats). I will be posting a tutorial for this configuration in time.
+- Windows Event Forwarding: Can be used to easily collect logs (Sysmon, etc.) which can then be shipped to your ELK stack using the [Beats Data Shippers](https://www.elastic.co/products/beats). I will be posting a tutorial for this configuration in time.
 - Great paper published by root9b about [Detecting Advanced Threats with Sysmon, WEF, and Elasticsearch](https://www.root9b.com/sites/default/files/whitepapers/R9B_blog_005_whitepaper_01.pdf)
 - [DeepBlueCLI](https://github.com/sans-blue-team/DeepBlueCLI) - Tool written by Eric Conrad to 
 
