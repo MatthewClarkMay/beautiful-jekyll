@@ -3,7 +3,7 @@ layout: page
 title: Blue Team Tools and References
 ---
 
-Here is a small collection of tools and references I find useful for building an effective IR infrastructure and toy chest.
+Here is a small collection of tools and references I find useful for building an effective IR infrastructure and toy chest. I'll be adding to this list soon.
 
 # Tools
 ## Forensics
