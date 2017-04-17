@@ -44,7 +44,7 @@ I recently listened to Eric Conrad speak at SANS in Orlando, and many of the thi
 - User Creation/Escalation Query:
   - Get-WinEvent -FilterHashtable @{logname="Security";id=4720,4732,4728}
 - Full Command Line Logging Query:
-  - Get-WinEvent -FilterGashtable @{Logname="Security"; ID=4688}
+  - Get-WinEvent -FilterHashtable @{Logname="Security"; ID=4688}
 - List of abusive windows commands to monitor - http://blog.jpcert.or.jp/.s/2016/01/windows-commands-abused-by-attackers.html
 
 ## Sysmon - Enhanced Logging:
