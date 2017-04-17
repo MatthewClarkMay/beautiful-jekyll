@@ -48,23 +48,24 @@ I recently listened to Eric Conrad speak at SANS in Orlando, and many of the thi
 - List of abusive windows commands to monitor - http://blog.jpcert.or.jp/.s/2016/01/windows-commands-abused-by-attackers.html
 
 ## Sysmon - Enhanced Logging:
-- Can be deployed to all endpoints for enhanced logging
+- Can be deployed to all endpoints for enhanced logging:
   - [Starter Config File](https://github.com/SwiftOnSecurity/sysmon-config)
   - [Config File Tuning](https://medium.com/@lennartkoopmann/explaining-and-adapting-tays-sysmon-configuration-27d9719a89a8)
   - Windows File Path: C:\Windows\System32\winevt\Logs\Microsoft-Windows-Sysmon%4Operational.evtx
 
 ## Whitelisting:
-- Send these logs to ELK as well
-  - AppLocker:
-    - 8003: (exe or dll) was allowed to run but would have been prevented from running if AppLocker policy were enforced (audit mode)
-    - 8004: (exe or dll) was not allowed to run (enforce mode)
-    - Get-WinEvent -FilterHashTable @{LogName="Microsoft-Windows-AppLocker/EXE and DLL"; ID=8003,8004}
+- AppLocker:
+  - 8003: (exe or dll) was allowed to run but would have been prevented from running if AppLocker policy were enforced (audit mode)
+  - 8004: (exe or dll) was not allowed to run (enforce mode)
+  - Get-WinEvent -FilterHashTable @{LogName="Microsoft-Windows-AppLocker/EXE and DLL"; ID=8003,8004}
+- Make sure these logs make it to the ELK stack as well.
 
 ## Active Mitigations: 
-- EMET BlockLogs:
+- [EMET](https://support.microsoft.com/en-us/help/2458544/the-enhanced-mitigation-experience-toolkit) BlockLogs:
   - Get-WinEvent -FilterHashtable @{LogName="application"; ProviderName="EMET"; id=2}
 - Antivirus - Send these logs to ELK as well
  
 
 ## Full Packet Capture + Network Security Monitoring Toolkit - Security Onion:
 - [WIKI](https://github.com/Security-Onion-Solutions/security-onion/wiki/IntroductionToSecurityOnion)
+- Security Onion has its own DB for storing logs (ELSA), but the future is bright for both platforms, and I believe people will soon begin often using them in pair. Doug Burks is currently testing [Security Onion + ELK](http://blog.securityonion.net/2017/03/towards-elk-on-security-onion.html)
