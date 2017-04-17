@@ -27,9 +27,9 @@ I recently listened to Eric Conrad speak at SANS in Orlando, and many of the thi
 ## Events to Watch:
 - System Event ID 7045 - Service Creation
 - System Event ID 7030 - Service Creation Errors
-- Security Event 4720 "A user account was created"
-- Security Event 4732 "A member was added to a security-enabled local group"
-- Security Event 4728 "A member was added to a security-enabled global group"
+- Security Event 4720 - "A user account was created"
+- Security Event 4732 - "A member was added to a security-enabled local group"
+- Security Event 4728 - "A member was added to a security-enabled global group"
 - Security Event 4688 Full Command Line Logging of all Processes:
   - gpedit.msc: set the following variables:
     - Computer Configuration\Windows Settings\Security Settings\Advanced Audit Policy Configuration\System Audit Policies\Detailed Tracking
