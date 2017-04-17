@@ -32,7 +32,7 @@ I will be appending content to this post in the future...
 - Security Event 4720 - "A user account was created"
 - Security Event 4732 - "A member was added to a security-enabled local group"
 - Security Event 4728 - "A member was added to a security-enabled global group"
-- Security Event 4688 Full Command Line Logging of all Processes:
+- Security Event 4688 - Full Command Line Logging of all Processes:
   - gpedit.msc: set the following variables:
     - Computer Configuration\Windows Settings\Security Settings\Advanced Audit Policy Configuration\System Audit Policies\Detailed Tracking
     - Computer Configuration\Administrative Templates\System\Audit Process Creation
