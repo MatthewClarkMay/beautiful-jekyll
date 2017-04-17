@@ -5,8 +5,6 @@ tags: [intrusion-detection]
 comments: true
 ---
 
-# Security Monitoring Checklist
-
 I recently listened to Eric Conrad speak at SANS in Orlando, and many of the things he discussed have made me take a step back to re-evaluate the way we should be monitoring our organizations. Below is a checklist you can use to begin effectively monitoring your network with entirely free tools. Some of this was originally mentioned [here](http://www.ericconrad.com/2016/10/quality-not-quantity-talk-commands-and.html) by Eric Conrad, but I have summarized particular snippets of his talk, and added my own input as well.
 
 # Intelligently Store/Analyze Data:
