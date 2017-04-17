@@ -58,7 +58,7 @@ I recently listened to Eric Conrad speak at SANS in Orlando, and many of the thi
   - AppLocker:
     - 8003: (exe or dll) was allowed to run but would have been prevented from running if AppLocker policy were enforced (audit mode)
     - 8004: (exe or dll) was not allowed to run (enforce mode)
-    - Get-WinEvent -FilterHashTable @{LogName="Microsoft-Windows-AppLocker/EXE and DLL"; ID=8003,8004}|OUT-Gridview
+    - Get-WinEvent -FilterHashTable @{LogName="Microsoft-Windows-AppLocker/EXE and DLL"; ID=8003,8004}
 
 ## Active Mitigations: 
 - EMET BlockLogs:
