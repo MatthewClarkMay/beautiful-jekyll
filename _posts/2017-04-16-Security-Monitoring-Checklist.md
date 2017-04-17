@@ -49,8 +49,8 @@ I recently listened to Eric Conrad speak at SANS in Orlando, and many of the thi
 - Make sure these logs make it to the ELK stack as well.
 
 ## Other Mitigations: 
-- [EMET](https://support.microsoft.com/en-us/help/2458544/the-enhanced-mitigation-experience-toolkit) BlockLogs:
-- Antivirus - Send these logs to ELK as well
+- [EMET](https://support.microsoft.com/en-us/help/2458544/the-enhanced-mitigation-experience-toolkit) BlockLogs
+- Antivirus Logs
 
 ## Event Queries:
 - Service Creation Query:
