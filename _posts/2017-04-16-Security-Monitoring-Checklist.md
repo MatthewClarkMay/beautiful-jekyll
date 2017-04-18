@@ -65,7 +65,7 @@ I will be appending content to this post in the future...
   - Get-WinEvent -FilterHashTable @{LogName="Microsoft-Windows-AppLocker/EXE and DLL"; ID=8003,8004}
 - EMET Block Events (requires EMET):
   - Get-WinEvent -FilterHashtable @{LogName="application"; ProviderName="EMET"; id=2}
-- List of [abusive Wondows commands often abused by attackers](http://blog.jpcert.or.jp/.s/2016/01/windows-commands-abused-by-attackers.html)
+- List of [abusive Windows commands often abused by attackers](http://blog.jpcert.or.jp/.s/2016/01/windows-commands-abused-by-attackers.html)
 
 ## Full Packet Capture + Network Security Monitoring Toolkit - Security Onion:
 - [WIKI](https://github.com/Security-Onion-Solutions/security-onion/wiki/IntroductionToSecurityOnion)
