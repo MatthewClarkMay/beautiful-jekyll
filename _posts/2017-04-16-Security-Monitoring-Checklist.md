@@ -19,7 +19,7 @@ I will be appending content to this post in the future...
   - Also take a look at [SOF-ELK](https://github.com/philhagen/sof-elk), an attempt headed by Phil Hagen to distribute an ELK VM Appliance for security monitoring.
 - Windows Event Forwarding: Can be used to easily collect logs (Sysmon, etc.) which can then be shipped to your ELK stack using the [Beats Data Shippers](https://www.elastic.co/products/beats). I will be posting a tutorial for this configuration in time.
 - Great paper published by root9b about [Detecting Advanced Threats with Sysmon, WEF, and Elasticsearch](https://www.root9b.com/sites/default/files/whitepapers/R9B_blog_005_whitepaper_01.pdf)
-- [DeepBlueCLI](https://github.com/sans-blue-team/DeepBlueCLI) - Tool written by Eric Conrad to 
+- [DeepBlueCLI](https://github.com/sans-blue-team/DeepBlueCLI) - Tool written by Eric Conrad to parse .evtx files for IOCs (Meterpreter payloads, etc).
 
 # Event Logging:
 - High-entropy service names are highly suspicious:
