@@ -29,8 +29,7 @@ navbar-links:
   Resources:
     - Blue Team: "blue-team-links"
     - Red Team: "red-team-links"
-    - GitHub Pages: "https://pages.github.com/"
-    - Learn markdown: "http://www.markdowntutorial.com/"
+    - Markdown Cheat Sheet: "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar

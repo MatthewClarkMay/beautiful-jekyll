@@ -3,7 +3,7 @@ layout: page
 title: Red Team Tools and References
 ---
 
-Here is a small collection of tools and references I find useful for various red team operations. I'll be adding to this list soon.
+Here is a small collection of tools and references I find useful for various red team operations. I'll be adding to this list as time goes on.
 
 # Tools
 
