@@ -58,6 +58,7 @@ My name is Matt May; I love craft beer, fine bourbon, and technology. I spend th
   - tshark
   - tcpdump
 - Maltego - Visual link analysis + OSINT
+
 #### Blue Team / Security Operations:
 - Security Onion
 - IDS:
@@ -70,6 +71,7 @@ My name is Matt May; I love craft beer, fine bourbon, and technology. I spend th
 - QRadar
 - ServiceNow
 - ELK Stack (Elasticsearch, Logstash, Kibana, Beats)
+
 #### Red Team / Pentesting
 - Metasploit
 - Veil
