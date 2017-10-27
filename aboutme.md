@@ -34,8 +34,10 @@ My name is Matt May; I love craft beer, fine bourbon, and technology. I spend th
 
 ### Tools / Technologies / Etc...
 #### General / Neutral:
-- Linux
-- Windows
+- OS:
+  - Linux
+  - Windows
+  - Mac
 - VMware
 - Firewalls:
   - Palo Alto
@@ -58,19 +60,23 @@ My name is Matt May; I love craft beer, fine bourbon, and technology. I spend th
   - tshark
   - tcpdump
 - Maltego - Visual link analysis + OSINT
+- Shodan
 
 #### Blue Team / Security Operations:
 - Security Onion
 - IDS:
   - Bro
   - Snort
-- Sysmon
-- Carbon Black (Response & Protect)
-- PhishMe Triage
-- ExchangeSnooper
-- QRadar
+- SIEM / Log Storage / Event Correlation
+  - QRadar
+  - ELK Stack (Elasticsearch, Logstash, Kibana, Beats)
+- HIDS / Event Collection
+  - Carbon Black (Response & Protect)
+  - Sysmon
+- Phishing:
+  - PhishMe Triage
+  - ExchangeSnooper
 - ServiceNow
-- ELK Stack (Elasticsearch, Logstash, Kibana, Beats)
 
 #### Red Team / Pentesting
 - Metasploit
