@@ -29,6 +29,7 @@ navbar-links:
   Resources:
     - Blue Team: "blue-team-links"
     - Red Team: "red-team-links"
+    - Maltego Docs: "https://www.paterva.com/web7/docs/userguides/user_guide.php#maltego-concepts"
     - Markdown Cheat Sheet: "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
 
 # Image to show in the navigation bar - image must be a square (width = height)
