@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Security Monitoring Checklist
+title: Security Monitoring Notes
 tags: [intrusion-detection] 
 comments: true
 ---
