@@ -127,7 +127,7 @@ mv /mnt/onionroot/var /mnt/onionroot/var.bak
 mkdir /mnt/onionroot/var
 ```
 
-Next we will create a new ~100GB VG, PV, and LV for /nsm/sensor_data. In this example I use /dev/sdb1 because that is my ~100GB RAID 5 array.
+Next we will create a new ~100TB VG, PV, and LV for /nsm/sensor_data. In this example I use /dev/sdb1 because that is my ~100TB RAID 5 array.
 
 ```
 pvcreate /dev/sdb1
