@@ -69,23 +69,31 @@ mkdir /mnt/onionroot/var
 
 Now we need to edit fstab to make sure the new /var partition is mounting during boot, and the system is no longer trying to mount swap space.
 
-`vim /mnt/onionroot/etc/fstab`
+```
+vim /mnt/onionroot/etc/fstab
+```
 
 Comment out:
-`/dev/mapper/securityonion--vg-swap_1 none    swap    sw    0    0`
+```
+/dev/mapper/securityonion--vg-swap_1 none    swap    sw    0    0
+```
 
 Add:
-`/dev/mapper/securityonion--vg-var /var    ext4    defaults    0    0`
+```
+/dev/mapper/securityonion--vg-var /var    ext4    defaults    0    0
+```
 
 `:wq` to save and quit vim.
 
-`reboot`
+```
+reboot
+```
 
-NOTE: the last field in an fstab entry tells the system what order to check that filesystem during boot. 0 tells the system to skip the check, 1 tells the system which entry to check first, and 2 is for other entries (checks in listed order). I originally set the /var entry to 2, but the system kept hanging during boot so I changed it to 0 and now there are no problems
+NOTE: The last field in an fstab entry tells the system what order to check that filesystem during boot. 0 tells the system to skip the check, 1 tells the system which entry to check first, and 2 is for other entries (checks in listed order). I originally set the /var entry to 2, but the system kept hanging during boot so I changed it to 0 and now there are no problems
 
 # Sensor (Forward Node)
 
-On this sensor we have two RAID arrays, The 2 x 120GB drives in RAID 1 give me ~120GB usable space to install the OS, and the 12 x 10TB drives in RAID 5 give me ~110TB usable space for /nsm/sensor_data (pcaps).
+On this sensor we have two RAID arrays, the 2 x 120GB drives in RAID 1 give me ~120GB usable space to install the OS, and the 12 x 10TB drives in RAID 5 give me ~110TB usable space for /nsm/sensor_data (pcaps).
 
 I selected the 120GB disk for system install:
 
