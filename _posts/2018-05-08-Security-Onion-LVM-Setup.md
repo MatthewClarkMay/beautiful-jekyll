@@ -49,9 +49,9 @@ By default the Security Onion LVM installer created one VG and two LVs:
 
 There are two LVM tweaks we need to make on this server. One is to reclaim swap space for the root partition; swap is unnecessary, assuming you have allocated sufficient RAM for your server. The second is to carve out dedicated space for /var so if the need for verbose logging ever arrises you don't need to worry about logs filling the entire filesystem.
 
-```lvremove /dev/securityonion-vg/swap_1   
-e2fsck -f /dev/securityonion-vg/root   
-resize2fs -f /dev/securityonion-vg/root 500G   
+```lvremove /dev/securityonion-vg/swap_1<br/>
+e2fsck -f /dev/securityonion-vg/root<br/>
+resize2fs -f /dev/securityonion-vg/root 500G<br/>
 e2fsck -f /dev/securityonion-vg/root   
 lvreduce -L 500G /dev/securityonion-vg/root   
 lvcreate -n var -l 100%FREE /dev/securityonion-vg    
@@ -147,9 +147,9 @@ By default the Security Onion LVM installer created one VG and two LVs:
 
 Swap is still unnecessary (with the proper hardware) so first we remove the swap_1 LV. After removing swap we need to reduce the root LV, and carve out dedicated space for /var and /nsm. In this scenario I gave my root LV 1TB, var LV 100GB, and nsm LV all remaining space, but you can allocate whatever you feel comfortable with here.
 
-```lvremove /dev/securityonion-vg/swap_1    
-e2fsck -f /dev/securityonion-vg/root    
-resize2fs -f /dev/securityonion-vg/root 1T     
+```lvremove /dev/securityonion-vg/swap_1<br/>
+e2fsck -f /dev/securityonion-vg/root
+resize2fs -f /dev/securityonion-vg/root 1T<br/>
 e2fsck -f /dev/securityonion-vg/root     
 lvreduce -L 1T /dev/securityonion-vg/root     
 lvcreate -n var -L 100G /dev/securityonion-vg      
@@ -167,8 +167,8 @@ mount -t ext4 /dev/securityonion-vg/root /mnt/onionroot
 rsync -avrHPSAX /mnt/onionroot/var/ /mnt/var.new/   
 rsync -avrHPSAX /mnt/onionroot/nsm/ /mnt/nsm.new/     
 mv /mnt/onionroot/var /mnt/onionroot/var.bak    
-mv /mnt/onionroot/nsm /mnt/onionroot/nsm.bak    
-mkdir /mnt/onionroot/var    
+mv /mnt/onionroot/nsm /mnt/onionroot/nsm.bak
+mkdir /mnt/onionroot/var
 mkdir /mnt/onionroot/nsm```    
 
 Now we need to edit fstab again to make sure the new /var and /nsm partitions are mounting during boot, and the system is no longer trying to mount swap space.
