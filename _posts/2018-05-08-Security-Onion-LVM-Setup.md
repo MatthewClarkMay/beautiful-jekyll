@@ -49,9 +49,9 @@ By default the Security Onion LVM installer created one VG and two LVs:
 
 There are two LVM tweaks we need to make on this server. One is to reclaim swap space for the root partition; swap is unnecessary, assuming you have allocated sufficient RAM for your server. The second is to carve out dedicated space for /var so if the need for verbose logging ever arrises you don't need to worry about logs filling the entire filesystem.
 
-```lvremove /dev/securityonion-vg/swap_1<br/>
-e2fsck -f /dev/securityonion-vg/root<br/>
-resize2fs -f /dev/securityonion-vg/root 500G<br/>
+```lvremove /dev/securityonion-vg/swap_1```
+```e2fsck -f /dev/securityonion-vg/root```
+resize2fs -f /dev/securityonion-vg/root 500G
 e2fsck -f /dev/securityonion-vg/root   
 lvreduce -L 500G /dev/securityonion-vg/root   
 lvcreate -n var -l 100%FREE /dev/securityonion-vg    
