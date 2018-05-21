@@ -11,8 +11,11 @@ Recently I've been building a multi-node Security Onion cluster to take advantag
 
 ### Master Node
 Virtualized
+
 600GB Disk Space
+
 8 CPUs
+
 32GB RAM
 
 ### Sensor (Forward Node)
