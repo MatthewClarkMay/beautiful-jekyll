@@ -5,7 +5,9 @@ tags: [intrusion-detection, security-onion, nsm, lvm, linux]
 comments: true
 ---
 
-Recently I've been building a multi-node Security Onion cluster to take advantage of full packet capture, Bro, Snort, ELK, and the assortment of fantastic open source forensic tools included with the distro. I leaned heavily on the [Security Onion Wiki](https://github.com/Security-Onion-Solutions/security-onion/wiki/) throughout the process, and although the guys over at [Security Onion Solutions](https://securityonionsolutions.com/) have done a fantastic job with the documentation, there wasn't much there regarding LVM and ideal partitioning. To help the community I put together this quick guide to basic LVM administration and repartitioning Security Onion from the default LVM setup. Originally I was going to build heavy nodes because I didn't have enough servers for storage nodes, but I ended up coming into another server and decided to give the distributed deployment a whirl. Because I didn't go through with the heavy node deployment I did not provide complete notes for it here, but I do provide a recommended raid configuration. You can read more about node types and deployment architecture at the [Architecture Wiki Page](https://github.com/Security-Onion-Solutions/security-onion/wiki/Elastic-Architecture). Lastly, this may not be the most correct method for managing logical volumes in Security Onion, but this is how I did it. Hope it helps!
+Recently I've been building a Security Onion cluster to take advantage of full packet capture, Bro, Snort, ELK, and the assortment of fantastic open source forensic tools included with the distro. I leaned heavily on the [Security Onion Wiki](https://github.com/Security-Onion-Solutions/security-onion/wiki/) throughout the process, and although the squad over at [Security Onion Solutions](https://securityonionsolutions.com/) have done a fantastic job with documentation, there wasn't much guidance regarding LVM and ideal partitioning schemes. I took it as an opportunity to learn LVM, and To help the community I put together this basic guide to LVM administration and repartitioning the default Security Onion LVM scheme.  
+
+Originally the plan was to build heavy nodes because I didn't have enough servers for a storage node, but managed to acquire another server and decided to give the distributed deployment a whirl. Because I didn't go through with the heavy node deployment I did not provide complete notes for it here, but I do provide a recommended heavy node RAID configuration. You can read more about node types and deployment architecture at the [Architecture](https://github.com/Security-Onion-Solutions/security-onion/wiki/Elastic-Architecture) Wiki Page. Lastly, this may not be the most correct method for reallocating default LVM space in Security Onion, but this is how I did it. The deployment is still young, but I have had no problems so far. Hope it helps!
 
 # Hardware
 
@@ -35,9 +37,11 @@ Recently I've been building a multi-node Security Onion cluster to take advantag
 
 # Bootable USB & Live ISO
 
-All LVM changes need to be performed on unmounted disks, so you will need to create a bootable linux USB (I used Kali) to administer logical volumes on sensors and storage nodes.
+All LVM changes need to be performed on unmounted disks, so you will need to create a bootable linux USB (I used Kali) to administer LVM on sensors and storage nodes.
 
-The master node is virtualized so after installing the OS from ISO you will need to mount a Linux ISO that allows live boot. The Security Onion ISO does allow live boot, but it isn't very straight forward to enter. Power on the VM and launch a web console through VCenter (assuming you use VMware in production) - You may need to CTRL+ALT+DEL a few times followed by a quick ESC to catch the boot menu because it fades quickly. Once booted into the ISO, select "Install". Exit the installer after it loads, it should drop you to a login screen. Login with the username "securityonion" and password field blank, it will grant you a session as the "securityonion" user who has sudo privileges. Open a terminal and type `sudo su -` to elevate privileges to root.
+The master node is virtualized, so after installing the OS from ISO you will need to mount a Linux ISO that allows live boot. The Security Onion ISO does allow live boot, but the boot menu doesn't explicitly show a "Live Boot" option.
+
+Power on the VM and launch a web console through VCenter (assuming you use VMware in production). You may need to CTRL+ALT+DEL a few times followed by a quick ESC to catch the boot menu because it fades quickly. Once booted into the ISO, select "Install". Quit the installer after it loads, it should drop you to a login screen. Login with the username "securityonion" and password field blank, it will grant you a session as the "securityonion" user who has sudo privileges. Open a terminal and type `sudo su -` to elevate privileges to root.
 
 # Master Node
 This was the first server I built. After installing the Security Onion ISO I mounted a Kali ISO and booted into a live Kali environment.
@@ -67,7 +71,7 @@ mv /mnt/onionroot/var /mnt/onionroot/var.bak
 mkdir /mnt/onionroot/var
 ```
 
-Now we need to edit fstab to make sure the new /var partition is mounting during boot, and the system is no longer trying to mount swap space.
+Now we need to edit fstab to make sure the new /var partition is mounting during boot, and ensure the system is no longer trying to mount swap space.
 
 ```
 vim /mnt/onionroot/etc/fstab
@@ -89,7 +93,7 @@ Add:
 reboot
 ```
 
-NOTE: The last field in an fstab entry tells the system what order to check that filesystem during boot. 0 tells the system to skip the check, 1 tells the system which entry to check first, and 2 is for other entries (checks in listed order). I originally set the /var entry to 2, but the system kept hanging during boot so I changed it to 0 and now there are no problems
+NOTE: The last field in an fstab entry tells the system what order to check that filesystem during boot. 0 tells the system to skip the check, 1 tells the system which entry to check first, and 2 is for other entries (checks in listed order). I originally set the /var entry to 2, but the system kept hanging during boot. I changed it to 0 and now there are no problems.
 
 # Sensor (Forward Node)
 
@@ -127,7 +131,7 @@ mv /mnt/onionroot/var /mnt/onionroot/var.bak
 mkdir /mnt/onionroot/var
 ```
 
-Next we will create a new ~100TB VG, PV, and LV for /nsm/sensor_data. In this example I use /dev/sdb1 because that is my ~100TB RAID 5 array.
+Next we will create a new ~100TB VG, PV, and LV for /nsm/sensor_data, in this example I use /dev/sdb1.
 
 ```
 pvcreate /dev/sdb1
@@ -137,7 +141,7 @@ mkfs -t xfs /dev/sensor_data-vg/sensor_data
 e2fsck -f /dev/sensor_data-vg/sensor_data
 ```
 
-Now we need to edit fstab again to make sure the new /var and /nsm/sensor_data partitions are mounting during boot, and the system is no longer trying to mount swap space.
+Now we need to edit fstab again to make sure the new /var and /nsm/sensor_data partitions are mounting during boot, and ensure the system is no longer trying to mount swap space.
 
 ```
 vim /mnt/onionroot/etc/fstab
@@ -196,7 +200,7 @@ mkdir /mnt/onionroot/var
 mkdir /mnt/onionroot/nsm
 ```
 
-Now we need to edit fstab again to make sure the new /var and /nsm partitions are mounting during boot, and the system is no longer trying to mount swap space.
+Now we need to edit fstab again to make sure the new /var and /nsm partitions are mounting during boot, and ensure the system is no longer trying to mount swap space.
 
 ```
 vim /mnt/onionroot/etc/fstab
@@ -218,3 +222,5 @@ Add:
 ```
 reboot
 ```
+
+That's all folks! I'll update these notes if any pertinent issues come to light.
