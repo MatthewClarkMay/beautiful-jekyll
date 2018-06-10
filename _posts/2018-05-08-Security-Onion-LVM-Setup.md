@@ -18,21 +18,22 @@ Originally the plan was to build heavy nodes because I didn't have enough server
 - 32GB RAM 
 
 ### Sensor (Forward Node)
-- 2 x 120GB drives in RAID 1 (/, /var) - Usually I prefer more storage here, but this is what I have to work with
+- 2 x 120GB drives in RAID 1 (/, /var, /home) - Usually I prefer more storage here, but this is what I have to work with
 - 12 x 10TB drives in RAID 5 (/nsm/sensor_data)
 - 2 x 24 core CPUs (48 total cores)
 - 128GB RAM
 
 ### Sensor (Heavy Node)
-- 2 x 120GB drives in RAID 1 (/, /var)
+- 2 x 120GB drives in RAID 1 (/, /var, /home)
 - 8 x 10TB drives in RAID 5 (/nsm/sensor_data)
 - 4 x 10TB drives in RAID 10 (/nsm/elasticsearch, /nsm/logstash)
 - 2 x 24 core CPUs (48 total cores)
 - 128GB RAM
 
 ### Storage Node
-- 12 x 4TB Drives in RAID 10
-- 2 x 20 core CPUs (40 total cores)
+- 2 x 120GB drives in RAID 1 (/, /var, /home) - Usually I prefer more storage here, but this is what I have to work with
+- 12 x 10TB drives in RAID 10 (/nsm)
+- 2 x 24 core CPUs (48 total cores)
 - 128GB RAM
 
 # Bootable USB & Live ISO
@@ -48,33 +49,33 @@ This was the first server I built. After installing the Security Onion ISO I mou
 
 By default the Security Onion LVM installer created one VG and two LVs:
 - /dev/securityonion-vg (~600GB)
-- /dev/securityonion-vg/root (~588GB)
-- /dev/securityonion-vg/swap_1 (~10GB)
+- /dev/securityonion-vg/root (~584GB)
+- /dev/securityonion-vg/swap_1 (~16GB)
 
 There are two LVM tweaks we need to make on this server. One is to reclaim swap space for the root partition; swap is unnecessary, assuming you have allocated sufficient RAM for your server. The second is to carve out dedicated space for /var so if the need for verbose logging ever arrises you don't need to worry about logs filling the entire filesystem.
 
 ```
 lvremove /dev/securityonion-vg/swap_1
 e2fsck -f /dev/securityonion-vg/root 
-resize2fs -f /dev/securityonion-vg/root 500G
+resize2fs -f /dev/securityonion-vg/root 400G
 e2fsck -f /dev/securityonion-vg/root
-lvreduce -L 500G /dev/securityonion-vg/root
+lvreduce -L 400G /dev/securityonion-vg/root
 lvcreate -n var -l 100%FREE /dev/securityonion-vg
 mkfs -t ext4 /dev/securityonion-vg/var
 e2fsck -f /dev/securityonion-vg/var
 mkdir /mnt/var.new
-mkdir /mnt/onionroot
+mkdir /mnt/root
 mount -t ext4 /dev/securityonion-vg/var /mnt/var.new
-mount -t ext4 /dev/securityonion-vg/root /mnt/onionroot
-rsync -ravHPSAX /mnt/onionroot/var/ /mnt/var.new/
-mv /mnt/onionroot/var /mnt/onionroot/var.bak
-mkdir /mnt/onionroot/var
+mount -t ext4 /dev/securityonion-vg/root /mnt/root
+rsync -ravHPSAX /mnt/root/var/ /mnt/var.new/
+mv /mnt/root/var /mnt/root/var.bak
+mkdir /mnt/root/var
 ```
 
 Now we need to edit fstab to make sure the new /var partition is mounting during boot, and ensure the system is no longer trying to mount swap space.
 
 ```
-vim /mnt/onionroot/etc/fstab
+vim /mnt/root/etc/fstab
 ```
 
 Comment out:
@@ -112,39 +113,47 @@ Swap is still unnecessary (with the proper hardware) so first we remove the swap
 ```
 lvremove /dev/securityonion-vg/swap_1
 e2fsck -f /dev/securityonion-vg/home
-resize2fs -f /dev/securityonion-vg/home 40G
+resize2fs -f /dev/securityonion-vg/home 30G
 e2fsck -f /dev/securityonion-vg/home
-lvreduce -L 40G /dev/securityonion-vg/home
-lvextend -L 50G /dev/securityonion-vg/root
+lvreduce -L 30G /dev/securityonion-vg/home
+lvextend -L 60G /dev/securityonion-vg/root
 e2fsck -f /dev/securityonion-vg/root
-resize2fs -f /dev/securityonion-vg/root 50G
+resize2fs -f /dev/securityonion-vg/root 60G
 e2fsck -f /dev/securityonion-vg/root
 lvcreate -n var -l 100%FREE /dev/securityonion-vg
 mkfs -t ext4 /dev/securityonion-vg/var
 e2fsck -f /dev/securityonion-vg/var
 mkdir /mnt/var.new
-mkdir /mnt/onionroot
+mkdir /mnt/root
 mount -t ext4 /dev/securityonion-vg/var /mnt/var.new
-mount -t ext4 /dev/securityonion-vg/root /mnt/onionroot
-rsync -avrHPSAX /mnt/onionroot/var/ /mnt/var.new/
-mv /mnt/onionroot/var /mnt/onionroot/var.bak
-mkdir /mnt/onionroot/var
+mount -t ext4 /dev/securityonion-vg/root /mnt/root
+rsync -avrHPSAX /mnt/root/var/ /mnt/var.new/
+mv /mnt/root/var /mnt/root/var.bak
+mkdir /mnt/root/var
 ```
 
-Next we will create a new ~100TB VG, PV, and LV for /nsm/sensor_data, in this example I use /dev/sdb1.
+Next we will create a new ~100TB PV, VG, and LV for /nsm/sensor_data, and /nsm/bro in this example I use /dev/sdb1.
 
 ```
 pvcreate /dev/sdb1
-vgcreate sensor_data-vg /dev/sdb1
-lvcreate -n sensor_data -l 100%FREE /dev/sensor_data-vg
-mkfs -t xfs /dev/sensor_data-vg/sensor_data
-e2fsck -f /dev/sensor_data-vg/sensor_data
+vgcreate nsm-vg /dev/sdb1
+lvcreate -n sensor_data -l 98%FREE /dev/nsm-vg
+mkfs -t xfs /dev/nsm-vg/sensor_data
+xfs_repair -n /dev/nsm-vg/sensor_data
+lvcreate -n bro -l 100%FREE /dev/nsm-vg
+mkfs -t xfs /dev/nsm-vg/bro
+xfs_repair -n /dev/nsm-vg/bro
+mkdir /mnt/bro.new
+mount -t xfs /dev/nsm-vg/bro /mnt/bro.new
+rsync -avrHPSAX /mnt/root/nsm/bro/ /mnt/bro.new/
+mv /mnt/root/nsm/bro /mnt/root/nsm/bro.bak
+mkdir /mnt/root/nsm/bro
 ```
 
-Now we need to edit fstab again to make sure the new /var and /nsm/sensor_data partitions are mounting during boot, and ensure the system is no longer trying to mount swap space.
+Now we need to edit fstab again to make sure the new /var, /nsm/sensor_data, and /nsm/bro partitions are mounting during boot, and ensure the system is no longer trying to mount swap space.
 
 ```
-vim /mnt/onionroot/etc/fstab
+vim /mnt/root/etc/fstab
 ```
 
 Comment out:
@@ -155,7 +164,8 @@ Comment out:
 Add:
 ```
 /dev/mapper/securityonion--vg-var /var    ext4    defaults    0    0
-/dev/mapper/sensor_data--vg-sensor_data /nsm/sensor_data    xfs    defaults    0    0
+/dev/mapper/nsm--vg-sensor_data /nsm/sensor_data    xfs    defaults    0    0
+/dev/mapper/nsm--vg-bro /nsm/bro    xfs    defaults    0    0
 ```
 
 `:wq` to save and quit vim.
@@ -165,7 +175,7 @@ reboot
 ```
 
 # Storage Node
-On this sensor we have ~22TB usable storage in RAID 10. After installation we boot from our USB again and configure partitions like such...
+On this sensor we have all 12 x 10TB disks in RAID 10 which gives us ~54TB usable storage. After installation we boot from our USB again and configure partitions like such...
 
 By default the Security Onion LVM installer created one VG and two LVs:
 - /dev/securityonion-vg (~22GB)
@@ -176,34 +186,45 @@ Swap is still unnecessary (with the proper hardware) so first we remove the swap
 
 ```
 lvremove /dev/securityonion-vg/swap_1
+e2fsck -f /dev/securityonion-vg/home
+resize2fs -f /dev/securityonion-vg/home 30G
+e2fsck -f /dev/securityonion-vg/home
+lvreduce -L 30G /dev/securityonion-vg/home
+lvextend -L 60G /dev/securityonion-vg/root
 e2fsck -f /dev/securityonion-vg/root
-resize2fs -f /dev/securityonion-vg/root 1T
+resize2fs -f /dev/securityonion-vg/root 60G
 e2fsck -f /dev/securityonion-vg/root
-lvreduce -L 1T /dev/securityonion-vg/root
-lvcreate -n var -L 100G /dev/securityonion-vg
-lvcreate -n nsm -l 100%FREE /dev/securityonion-vg
+lvcreate -n var -l 100%FREE /dev/securityonion-vg
 mkfs -t ext4 /dev/securityonion-vg/var
 e2fsck -f /dev/securityonion-vg/var
-mkfs -t ext4 /dev/securityonion-vg/nsm
-e2fsck -f /dev/securityonion-vg/nsm
 mkdir /mnt/var.new
-mkdir /mnt/nsm.new
-mkdir /mnt/onionroot
+mkdir /mnt/root
 mount -t ext4 /dev/securityonion-vg/var /mnt/var.new
-mount -t ext4 /dev/securityonion-vg/nsm /mnt/nsm.new
-mount -t ext4 /dev/securityonion-vg/root /mnt/onionroot
-rsync -avrHPSAX /mnt/onionroot/var/ /mnt/var.new/
-rsync -avrHPSAX /mnt/onionroot/nsm/ /mnt/nsm.new/
-mv /mnt/onionroot/var /mnt/onionroot/var.bak
-mv /mnt/onionroot/nsm /mnt/onionroot/nsm.bak
-mkdir /mnt/onionroot/var
-mkdir /mnt/onionroot/nsm
+mount -t ext4 /dev/securityonion-vg/root /mnt/root
+rsync -avrHPSAX /mnt/root/var/ /mnt/var.new/
+mv /mnt/root/var /mnt/root/var.bak
+mkdir /mnt/root/var
+```
+
+Next we will create a new ~100TB PV, VG, and LV for /nsm/sensor_data, and /nsm/bro in this example I use /dev/sdb1.
+
+```
+pvcreate /dev/sdb1
+vgcreate nsm-vg /dev/sdb1
+lvcreate -n nsm -l 100%FREE /dev/nsm-vg
+mkfs -t xfs /dev/nsm-vg/nsm
+xfs_repair -n /dev/nsm-vg/nsm
+mkdir /mnt/nsm
+mount -t xfs /dev/nsm-vg/nsm /mnt/nsm
+rsync -avrHPSAX /mnt/root/nsm/ /mnt/nsm
+mv /mnt/root/nsm /mnt/root/nsm.bak
+mkdir /mnt/root/nsm
 ```
 
 Now we need to edit fstab again to make sure the new /var and /nsm partitions are mounting during boot, and ensure the system is no longer trying to mount swap space.
 
 ```
-vim /mnt/onionroot/etc/fstab
+vim /mnt/root/etc/fstab
 ```
 
 Comment out:
@@ -214,7 +235,7 @@ Comment out:
 Add:
 ```
 /dev/mapper/securityonion--vg-var /var    ext4    defaults    0    0
-/dev/mapper/securityonion--vg-nsm /nsm    ext4    defaults    0    0
+/dev/mapper/securityonion--vg-nsm /nsm    xfs    defaults    0    0
 ```
 
 `:wq` to save and quit vim.
