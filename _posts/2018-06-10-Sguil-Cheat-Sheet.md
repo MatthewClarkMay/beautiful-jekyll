@@ -2,7 +2,7 @@
 layout: post
 title: Sguil Cheat Sheet
 tags: [intrusion-detection, security-onion, nsm, snort, sguil]
-comments: true
+comments: false
 ---
 
 - F1: Category I: Unauthorized Root/Admin Access

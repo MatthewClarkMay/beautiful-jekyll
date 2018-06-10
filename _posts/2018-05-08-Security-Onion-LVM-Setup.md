@@ -2,7 +2,7 @@
 layout: post
 title: Security Onion LVM Setup
 tags: [intrusion-detection, security-onion, nsm, lvm, linux]
-comments: true
+comments: false
 ---
 
 Recently I've been building a Security Onion cluster to take advantage of full packet capture, Bro, Snort, ELK, and the assortment of fantastic open source forensic tools included with the distro. I leaned heavily on the [Security Onion wiki](https://github.com/Security-Onion-Solutions/security-onion/wiki/) throughout the process, and although the squad over at [Security Onion Solutions](https://securityonionsolutions.com/) has done a fantastic job with documentation, there wasn't much guidance regarding LVM and ideal partitioning schemes. I took this lack of guidance as an opportunity to learn LVM. Throughout the process I put together this basic guide to repartitioning the default Security Onion LVM scheme.  

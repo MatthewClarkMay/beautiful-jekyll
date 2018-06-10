@@ -2,7 +2,7 @@
 layout: post
 title: Security Monitoring Notes
 tags: [intrusion-detection] 
-comments: true
+comments: false
 ---
 
 Blue team goodies...
