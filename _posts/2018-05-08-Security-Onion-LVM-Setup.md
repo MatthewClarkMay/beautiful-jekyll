@@ -19,7 +19,7 @@ Originally the plan was to build heavy nodes because I didn't have enough server
 
 ### Sensor (Forward Node)
 - 2 x 120GB drives in RAID 1 (/, /var, /home) - Usually I prefer more storage here, but this is what I have to work with
-- 12 x 10TB drives in RAID 5 (/nsm/sensor_data)
+- 12 x 10TB drives in RAID 5 (/nsm)
 - 2 x 24 core CPUs (48 total cores)
 - 128GB RAM
 
@@ -38,14 +38,12 @@ Originally the plan was to build heavy nodes because I didn't have enough server
 
 # Bootable USB & Live ISO
 
-All LVM changes need to be performed on unmounted disks, so you will need to create a bootable linux USB (I used Kali) to administer LVM on sensors and storage nodes.
+All LVM changes need to be performed on unmounted disks, so you will need to boot from a Linux USB when making these tweaks.
 
-The master node is virtualized, so after installing the OS from ISO you will need to mount a Linux ISO that allows live boot. The Security Onion ISO does allow live boot, but the boot menu doesn't explicitly show a "Live Boot" option.
-
-Power on the VM and launch a web console through VCenter (assuming you use VMware in production). You may need to CTRL+ALT+DEL a few times followed by a quick ESC to catch the boot menu because it fades quickly. Once booted into the ISO, select "Install". Quit the installer after it loads, it should drop you to a login screen. Login with the username "securityonion" and password field blank, it will grant you a session as the "securityonion" user who has sudo privileges. Open a terminal and type `sudo su -` to elevate privileges to root.
+The master node is virtualized, so after installing the OS from ISO you will need to mount a Linux ISO that allows live boot; the Security Onion ISO will work.
 
 # Master Node
-This was the first server I built. After installing the Security Onion ISO I mounted a Kali ISO and booted into a live Kali environment.
+This was the first server I built. After installing the Security Onion ISO I kept it mounted and booted into the live environment.
 
 By default the Security Onion LVM installer created one VG and two LVs:
 - /dev/securityonion-vg (~600GB)
@@ -98,7 +96,7 @@ NOTE: The last field in an fstab entry tells the system what order to check that
 
 # Sensor (Forward Node)
 
-On this sensor we have two RAID arrays, the 2 x 120GB drives in RAID 1 give me ~120GB usable space to install the OS, and the 12 x 10TB drives in RAID 5 give me ~110TB usable space for /nsm/sensor_data (pcaps).
+On this sensor we have two RAID arrays, the 2 x 120GB drives in RAID 1 give me ~120GB usable space to install the OS, and the 12 x 10TB drives in RAID 5 give me ~110TB usable space for /nsm (pcaps and bro logs).
 
 I selected the 120GB disk for system install:
 
@@ -132,25 +130,22 @@ mv /mnt/root/var /mnt/root/var.bak
 mkdir /mnt/root/var
 ```
 
-Next we will create a new ~100TB PV, VG, and LV for /nsm/sensor_data, and /nsm/bro in this example I use /dev/sdb1.
+Next we will create a new ~100TB PV, VG, and LV for /nsm, in this example I use /dev/sdb1.
 
 ```
 pvcreate /dev/sdb1
 vgcreate nsm-vg /dev/sdb1
-lvcreate -n sensor_data -l 98%FREE /dev/nsm-vg
-mkfs -t xfs /dev/nsm-vg/sensor_data
-xfs_repair -n /dev/nsm-vg/sensor_data
-lvcreate -n bro -l 100%FREE /dev/nsm-vg
-mkfs -t xfs /dev/nsm-vg/bro
-xfs_repair -n /dev/nsm-vg/bro
-mkdir /mnt/bro.new
-mount -t xfs /dev/nsm-vg/bro /mnt/bro.new
-rsync -avrHPSAX /mnt/root/nsm/bro/ /mnt/bro.new/
-mv /mnt/root/nsm/bro /mnt/root/nsm/bro.bak
-mkdir /mnt/root/nsm/bro
+lvcreate -n nsm -l 100%FREE /dev/nsm-vg
+mkfs -t xfs /dev/nsm-vg/nsm
+xfs_repair -n /dev/nsm-vg/nsm
+mkdir /mnt/nsm.new
+mount -t xfs /dev/nsm-vg/nsm /mnt/nsm.new
+rsync -avrHPSAX /mnt/root/nsm/ /mnt/nsm.new/
+mv /mnt/root/nsm/ /mnt/root/nsm.bak
+mkdir /mnt/root/nsm
 ```
 
-Now we need to edit fstab again to make sure the new /var, /nsm/sensor_data, and /nsm/bro partitions are mounting during boot, and ensure the system is no longer trying to mount swap space.
+Now we need to edit fstab again to make sure the new /var and /nsm partitions are mounting during boot, and ensure the system is no longer trying to mount swap space.
 
 ```
 vim /mnt/root/etc/fstab
@@ -164,8 +159,7 @@ Comment out:
 Add:
 ```
 /dev/mapper/securityonion--vg-var /var    ext4    defaults    0    0
-/dev/mapper/nsm--vg-sensor_data /nsm/sensor_data    xfs    defaults    0    0
-/dev/mapper/nsm--vg-bro /nsm/bro    xfs    defaults    0    0
+/dev/mapper/nsm--vg-nsm /nsm    xfs    defaults    0    0
 ```
 
 `:wq` to save and quit vim.
@@ -178,9 +172,9 @@ reboot
 On this sensor we have all 12 x 10TB disks in RAID 10 which gives us ~54TB usable storage. After installation we boot from our USB again and configure partitions like such...
 
 By default the Security Onion LVM installer created one VG and two LVs:
-- /dev/securityonion-vg (~22GB)
-- /dev/securityonion-vg/root (~21.7GB)
-- /dev/securityonion-vg/swap_1 (~128GB)
+- /dev/securityonion-vg (~110GB)
+- /dev/securityonion-vg/root (~28GB)
+- /dev/securityonion-vg/swap_1 (~2.5GB)
 
 Swap is still unnecessary (with the proper hardware) so first we remove the swap_1 LV. After removing swap we need to reduce the root LV, and carve out dedicated space for /var and /nsm. In this scenario I gave my root LV 1TB, var LV 100GB, and nsm LV all remaining space, but you can allocate whatever you feel comfortable with here.
 
@@ -206,7 +200,7 @@ mv /mnt/root/var /mnt/root/var.bak
 mkdir /mnt/root/var
 ```
 
-Next we will create a new ~100TB PV, VG, and LV for /nsm/sensor_data, and /nsm/bro in this example I use /dev/sdb1.
+Next we will create a new ~100TB PV, VG, and LV for /nsm, in this example I use /dev/sdb1.
 
 ```
 pvcreate /dev/sdb1
@@ -235,7 +229,7 @@ Comment out:
 Add:
 ```
 /dev/mapper/securityonion--vg-var /var    ext4    defaults    0    0
-/dev/mapper/securityonion--vg-nsm /nsm    xfs    defaults    0    0
+/dev/mapper/nsm--vg-nsm /nsm    xfs    defaults    0    0
 ```
 
 `:wq` to save and quit vim.
