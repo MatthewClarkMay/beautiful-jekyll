@@ -138,7 +138,7 @@ wmic process list full
 netstat -nabo 1 | find "<IPADDR or PORT>"
 ```
 
-# Red Teaming
+# Sneaky Evil Hacks
 
 ### Configure Windows host as WPA2-PSK Access Point
 ```
