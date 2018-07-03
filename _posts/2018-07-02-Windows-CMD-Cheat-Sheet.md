@@ -8,26 +8,26 @@ comments: false
 This page is a command reference for various blue and red team tactics and techniques. I've accumulated most of this content from SANS posters, various blogs, and personal experience. It is meant to be a reference for myself, but hopefully it proves useful for others as well.
 
 ## Remote Access
-#### Map admin share using net.exe
+### Map admin share using net.exe
 ```
 net use z: \\host\c$ /user:domain\username <password>
 ```
 
 ## Remote Execution
 
-#### Scheduled Tasks
+### Scheduled Tasks
 ```
 at.exe \\host 12:00:00 "c:\temp\maltask.exe"
 schtasks.exe /CREATE /TN taskname /TR c:\temp\malware.exe /SC once /RU "SYSTEM" /ST 12:00:00 /S host /U username
 ```
 
-#### Services 
+### Services 
 ```
 sc \\host create servicename binpath="c:\temp\malware.exe"
 sc \\host start servicename
 ```
 
-#### Svchost Investigation
+### Svchost Investigation
 ```
 tasklist /svc
 sc config <svc name> type=own
@@ -37,21 +37,21 @@ List services in each svchost block, break a service out of its container, and r
 - If service keeps crashing then check that services recovery options - could be running another program instead of restarting (Kansa module Get-SvcFail.ps1 useful here)
 - Scheduled tasks can be set remotely
 
-#### WMI/WMIC
-###### WMIEvtConsumers
+### WMI/WMIC
+#### WMIEvtConsumers
 - Event Filter = Trigger condition
 - Event Consumer = Script or executable to run
 - Binding = Filter + Consumer
 - Usually saved to .MOF file
 - Triggers can be basically ANYTHING
 
-###### WMIC Remote Process Creation
+#### WMIC Remote Process Creation
 ```
 wmic /node:host process call create "malware.exe"
 Invoke-WmiMethod -Computer host -Class Win32_Process -Name create -Argument "c:\temp\malware.exe"
 ```
 
-#### PowerShell Remoting
+### PowerShell Remoting
 Create new PS Session on target, transfer files to or from target, and kill session.
 ```
 $TargetSession = New-PSSession -ComputerName <hostname>
@@ -65,12 +65,12 @@ Enter-PSSession -ComputerName host
 Invoke-Command -ComputerName host -ScriptBlock {Start-Process c:\temp\malware.exe}
 ```
 
-#### Kansa
+### Kansa
 <placeholder>
 
 ## Hunting Persistent Malware
 
-#### Autoruns (SysInternals)
+### Autoruns (SysInternals)
 NOTES: filter output based on publisher - eliminate verified known publishers and examine what remains
 ```
 C:\autorunsc.exe -accepteula [options] > autoruns.csv
