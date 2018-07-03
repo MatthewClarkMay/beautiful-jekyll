@@ -17,6 +17,10 @@ This page is a command reference for various blue and red team tactics and techn
 [Kansa](#kansa)  
 [Hunting Persistent Malware](#hunting-persistent-malware)  
 [Autoruns](#autoruns)  
+[WMIC Process Listing](#wmic-process-listing)
+[Netstat Hacks](#netstat-hacks)
+[Red Teaming](#red-teaming)
+[Configure Windows host as WPA2-PSK Access Point](#configure-windows-host-as-wpa2-psk-access-point)
 
 # Remote Access
 ### Map admin share using net.exe
@@ -122,4 +126,21 @@ C:\autorunsc.exe -accepteula [options] > autoruns.csv
 -z             Specifies offline Windows system to scan
 
 -nobanner      Do not display startup messages
+```
+
+### WMIC Process Listing
+```
+wmic process list full
+```
+
+### Netstat Hacks
+```
+netstat -nabo 1 | find "<IPADDR or PORT>"
+```
+
+# Red Teaming
+
+### Configure Windows host as WPA2-PSK Access Point
+```
+netsh wlan set hostednetwork mode=allow ssid=<MYSSID> key=<MYPASSWORD> && netsh wlan start hostednetwork
 ```
