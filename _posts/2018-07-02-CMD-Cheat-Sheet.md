@@ -1,10 +1,17 @@
 ---
 layout: post
 title: CMD Cheat Sheet
-tags: [incident-response, pivoting, powershell, windows ]
+tags: [incident-response, pivoting, powershell, windows]
 comments: false
 ---
 This page is a command reference for various blue and red team tactics and techniques. I've accumulated most of this content from SANS posters, various blogs, and personal experience. It is meant to be a reference for myself, but hopefully it proves useful for others as well.
+
+[Remote Access](#remote-access)
+[Remote Execution](#remote-execution)
+  [Scheduled Task Creation](#scheduled-task-creation)
+  [Service Creation](#service-creation)
+  [Service Investigation](#service-investigation)
+  [WMIC](#wmi-and-wmic)
 
 # Remote Access
 ### Map admin share using net.exe
@@ -36,15 +43,15 @@ List services in each svchost block, break a service out of its container, and r
 
 If service keeps crashing then check that services recovery options - could be running another program instead of restarting (Kansa module Get-SvcFail.ps1 useful here)
 
-### WMI/WMIC
-#### WMIEvtConsumers
+### WMI and WMIC
+### WMIEvtConsumers
 - Event Filter = Trigger condition
 - Event Consumer = Script or executable to run
 - Binding = Filter + Consumer
 - Usually saved to .MOF file
 - Triggers can be basically ANYTHING
 
-#### WMIC Remote Process Creation
+### WMIC Remote Process Creation
 ```
 wmic /node:host process call create "malware.exe"
 Invoke-WmiMethod -Computer host -Class Win32_Process -Name create -Argument "c:\temp\malware.exe"
