@@ -17,10 +17,10 @@ This page is a command reference for various blue and red team tactics and techn
 [Kansa](#kansa)  
 [Hunting Persistent Malware](#hunting-persistent-malware)  
 [Autoruns](#autoruns)  
-[WMIC Process Listing](#wmic-process-listing)
-[Netstat Hacks](#netstat-hacks)
-[Red Teaming](#red-teaming)
-[Configure Windows host as WPA2-PSK Access Point](#configure-windows-host-as-wpa2-psk-access-point)
+[WMIC Process Listing](#wmic-process-listing)  
+[Netstat Hacks](#netstat-hacks)  
+[Red Teaming](#red-teaming)  
+[Configure Windows host as WPA2-PSK Access Point](#configure-windows-host-as-wpa2-psk-access-point)  
 
 # Remote Access
 ### Map admin share using net.exe
