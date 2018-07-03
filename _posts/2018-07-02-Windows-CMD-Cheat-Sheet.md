@@ -4,9 +4,7 @@ title: Windows CMD Cheat Sheet
 tags: [incident-response, pivoting, powershell, windows ]
 comments: false
 ---
-
 This page is a command reference for various blue and red team tactics and techniques. I've accumulated most of this content from SANS posters, various blogs, and personal experience. It is meant to be a reference for myself, but hopefully it proves useful for others as well.
-
 # Remote Access
 ### Map admin share using net.exe
 ```
