@@ -5,6 +5,7 @@ tags: [incident-response, pivoting, powershell, windows ]
 comments: false
 ---
 This page is a command reference for various blue and red team tactics and techniques. I've accumulated most of this content from SANS posters, various blogs, and personal experience. It is meant to be a reference for myself, but hopefully it proves useful for others as well.
+
 # Remote Access
 ### Map admin share using net.exe
 ```
@@ -32,6 +33,7 @@ sc config <svc name> type=own
 net stop <svc name> && net start <svc name>
 ```
 List services in each svchost block, break a service out of its container, and restart that service in its own container. Great for troubleshooting resource hogging services, discovering services to exploit, or hunting for malware.
+
 If service keeps crashing then check that services recovery options - could be running another program instead of restarting (Kansa module Get-SvcFail.ps1 useful here)
 
 ### WMI/WMIC
