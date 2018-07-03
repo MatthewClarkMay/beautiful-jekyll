@@ -71,7 +71,7 @@ Invoke-Command -ComputerName host -ScriptBlock {Start-Process c:\temp\malware.ex
 # Hunting Persistent Malware
 
 ### Autoruns (SysInternals)
-NOTES: filter output based on publisher - eliminate verified known publishers and examine what remains
+Filter output based on publisher, eliminate verified known publishers, and examine what remains.
 ```
 C:\autorunsc.exe -accepteula [options] > autoruns.csv
 
