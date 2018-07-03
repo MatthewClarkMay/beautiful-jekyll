@@ -11,7 +11,6 @@ This page is a command reference for various blue and red team tactics and techn
 [Scheduled Task Creation](#scheduled-task-creation)  
 [Service Creation](#service-creation)  
 [Service Investigation](#service-investigation)  
-[WMIC](#wmi-and-wmic)  
 [WMIEvtConsumers](#wmievtconsumers)  
 [WMIC Remote Process Creation](#wmic-remote-process-creation)  
 [PowerShell Remoting](#powershell-remoting)  
@@ -49,7 +48,6 @@ List services in each svchost block, break a service out of its container, and r
 
 If service keeps crashing then check that services recovery options - could be running another program instead of restarting (Kansa module Get-SvcFail.ps1 useful here)
 
-### WMI and WMIC
 ### WMIEvtConsumers
 - Event Filter = Trigger condition
 - Event Consumer = Script or executable to run
