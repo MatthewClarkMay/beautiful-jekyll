@@ -7,27 +7,27 @@ comments: false
 
 This page is a command reference for various blue and red team tactics and techniques. I've accumulated most of this content from SANS posters, various blogs, and personal experience. It is meant to be a reference for myself, but hopefully it proves useful for others as well.
 
-## Remote Access
+# Remote Access
 ### Map admin share using net.exe
 ```
 net use z: \\host\c$ /user:domain\username <password>
 ```
 
-## Remote Execution
+# Remote Execution
 
-### Scheduled Tasks
+### Scheduled Task Creation
 ```
 at.exe \\host 12:00:00 "c:\temp\maltask.exe"
 schtasks.exe /CREATE /TN taskname /TR c:\temp\malware.exe /SC once /RU "SYSTEM" /ST 12:00:00 /S host /U username
 ```
 
-### Services 
+### Service Creation
 ```
 sc \\host create servicename binpath="c:\temp\malware.exe"
 sc \\host start servicename
 ```
 
-### Svchost Investigation
+### Service Investigation
 ```
 tasklist /svc
 sc config <svc name> type=own
