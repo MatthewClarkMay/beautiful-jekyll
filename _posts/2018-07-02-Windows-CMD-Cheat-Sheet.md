@@ -66,7 +66,7 @@ Invoke-Command -ComputerName host -ScriptBlock {Start-Process c:\temp\malware.ex
 ```
 
 ### Kansa
-<placeholder>
+(placeholder)
 
 ## Hunting Persistent Malware
 
