@@ -6,10 +6,8 @@ comments: false
 ---
 This page is a command reference for various blue and red team tactics and techniques. I've accumulated most of this content from SANS posters, various blogs, and personal experience. It is meant to be a reference for myself, but hopefully it proves useful for others as well.
 
-[Remote Access](#remote-access)
-
-[Remote Execution](#remote-execution)
-
+[Remote Access](#remote-access)  
+[Remote Execution](#remote-execution)  
   [Scheduled Task Creation](#scheduled-task-creation)
   [Service Creation](#service-creation)
   [Service Investigation](#service-investigation)
