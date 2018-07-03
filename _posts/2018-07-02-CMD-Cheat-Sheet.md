@@ -19,7 +19,7 @@ This page is a command reference for various blue and red team tactics and techn
 [Autoruns](#autoruns)  
 [WMIC Process Listing](#wmic-process-listing)  
 [Netstat Hacks](#netstat-hacks)  
-[Red Teaming](#red-teaming)  
+[Sneaky Evil Hacks](#sneaky-evil-hacks)  
 [Configure Windows host as WPA2-PSK Access Point](#configure-windows-host-as-wpa2-psk-access-point)  
 
 # Remote Access
