@@ -68,7 +68,7 @@ Invoke-Command -ComputerName host -ScriptBlock {Start-Process c:\temp\malware.ex
 ### Kansa
 (placeholder)
 
-## Hunting Persistent Malware
+# Hunting Persistent Malware
 
 ### Autoruns (SysInternals)
 NOTES: filter output based on publisher - eliminate verified known publishers and examine what remains
