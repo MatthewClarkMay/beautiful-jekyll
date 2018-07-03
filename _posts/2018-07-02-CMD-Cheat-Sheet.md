@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Windows CMD Cheat Sheet
+title: CMD Cheat Sheet
 tags: [incident-response, pivoting, powershell, windows ]
 comments: false
 ---
