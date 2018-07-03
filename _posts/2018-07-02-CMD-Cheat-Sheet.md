@@ -8,16 +8,16 @@ This page is a command reference for various blue and red team tactics and techn
 
 [Remote Access](#remote-access)  
 [Remote Execution](#remote-execution)  
-   [Scheduled Task Creation](#scheduled-task-creation)  
-   [Service Creation](#service-creation)  
-   [Service Investigation](#service-investigation)  
-   [WMIC](#wmi-and-wmic)  
-   [WMIEvtConsumers](#wmievtconsumers)
-   [WMIC Remote Process Creation](#wmic-remote-process-creation)
-   [PowerShell Remoting](#powershell-remoting)
-   [Kansa](#kansa)
-   [Hunting Persistent Malware](#hunting-persistent-malware)
-   [Autoruns](#autoruns)
+[Scheduled Task Creation](#scheduled-task-creation)  
+[Service Creation](#service-creation)  
+[Service Investigation](#service-investigation)  
+[WMIC](#wmi-and-wmic)  
+[WMIEvtConsumers](#wmievtconsumers)  
+[WMIC Remote Process Creation](#wmic-remote-process-creation)  
+[PowerShell Remoting](#powershell-remoting)  
+[Kansa](#kansa)  
+[Hunting Persistent Malware](#hunting-persistent-malware)  
+[Autoruns](#autoruns)  
 
 # Remote Access
 ### Map admin share using net.exe
