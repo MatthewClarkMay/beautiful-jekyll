@@ -32,8 +32,7 @@ sc config <svc name> type=own
 net stop <svc name> && net start <svc name>
 ```
 List services in each svchost block, break a service out of its container, and restart that service in its own container. Great for troubleshooting resource hogging services, discovering services to exploit, or hunting for malware.
-- If service keeps crashing then check that services recovery options - could be running another program instead of restarting (Kansa module Get-SvcFail.ps1 useful here)
-- Scheduled tasks can be set remotely
+If service keeps crashing then check that services recovery options - could be running another program instead of restarting (Kansa module Get-SvcFail.ps1 useful here)
 
 ### WMI/WMIC
 #### WMIEvtConsumers
