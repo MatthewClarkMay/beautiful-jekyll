@@ -126,6 +126,9 @@ C:\autorunsc.exe -accepteula [options] > autoruns.csv
 -z             Specifies offline Windows system to scan
 
 -nobanner      Do not display startup messages
+
+Example:
+autorunsc.exe -accepteula -a * -h -s -c -vr > autoruns.csv
 ```
 
 ### WMIC Process Listing
