@@ -88,7 +88,7 @@ Invoke-Command -ComputerName host -ScriptBlock {Start-Process c:\temp\malware.ex
 ### Autoruns
 Filter output based on publisher, eliminate verified known publishers, and examine what remains.
 ```
-C:\autorunsc.exe -accepteula [options] > autoruns.csv
+C:\> autorunsc.exe -accepteula [options] > autoruns.csv
 
 -accepteula    Automatically accept Microsoft software license
 -a *           Show all entries
@@ -136,7 +136,8 @@ Additionally, the GUI version of Autoruns is also available, but I prefer the CL
 - Green - Used when comparing against a previous set of Autoruns data highlight items that weren't already there.
 - Yellow - The startup entry is there, but the file or job it points to doesn't exist anymore.   
 
-[Great Autoruns GUI reference / writeup here](https://www.howtogeek.com/school/sysinternals-pro/lesson6/)
+[SANS Autoruns writeup](https://sans.org/reading-room/whitepapers/malicious/utilizing-autoruns-catch-malware-33383)
+[HowToGeek Autoruns GUI reference / writeup](https://www.howtogeek.com/school/sysinternals-pro/lesson6/)
 
 ### WMIC Process Listing
 ```
@@ -155,10 +156,11 @@ netstat -nabo 1 | find "<IPADDR or PORT>"
 netsh wlan set hostednetwork mode=allow ssid=<MYSSID> key=<MYPASSWORD> && netsh wlan start hostednetwork
 ```
 
-### Minifilter Driver Management Operations and Troubleshooting
+### Minifilter Driver Management Operations and Troubleshooting Using fltmc
 Used to load and unload minifilter drivers, attach minifilter drivers to volumes or detach them from volumes, and enumerate minifilter drivers, instances, and volumes. I once had an issue where Sysmon and a particular EDR product weren't playing well together; this tool assisted the investigation.   
 ```
-fltmc help
+C:\> fltmc help
+
 Valid commands:
     load        Loads a Filter driver
     unload      Unloads a Filter driver
