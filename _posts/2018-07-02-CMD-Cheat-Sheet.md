@@ -21,6 +21,7 @@ This page is a command reference for various blue and red team tactics and techn
 [Netstat Hacks](#netstat-hacks)  
 [Sneaky Evil Hacks](#sneaky-evil-hacks)  
 [Configure Windows host as WPA2-PSK Access Point](#configure-windows-host-as-wpa2-psk-access-point)  
+[Minifilter Driver Management Operations and Troubleshooting](#minifilter-driver-management-operations-and-troubleshooting)
 
 # Remote Access
 ### Map admin share using net.exe
@@ -82,7 +83,7 @@ Invoke-Command -ComputerName host -ScriptBlock {Start-Process c:\temp\malware.ex
 ### Kansa
 (placeholder)
 
-# Hunting Persistent Malware
+# Hunting Malware
 
 ### Autoruns
 Filter output based on publisher, eliminate verified known publishers, and examine what remains.
@@ -130,6 +131,11 @@ C:\autorunsc.exe -accepteula [options] > autoruns.csv
 Example:
 autorunsc.exe -accepteula -a * -h -s -c -vr > autoruns.csv
 ```
+Additionally, the GUI version of Autoruns is also available, but I prefer the CLI version because it enables you to programmatically manipulate output. The GUI output includes color coordination - The colors mean the following.
+- Pink - No publisher information was found, or if code verification is on, the digital signature either doesn't exist, or doesn't match, or there is no publisher information.
+- Green - Used when comparing against a previous set of Autoruns data highlight items that weren't already there.
+- Yellow - The startup entry is there, but the file or job it points to doesn't exist anymore.   
+[Great Autoruns GUI reference / writeup here](https://blogs.msdn.microsoft.com/ntdebugging/2013/03/25/understanding-file-system-minifilter-and-legacy-filter-load-order)
 
 ### WMIC Process Listing
 ```
@@ -147,3 +153,7 @@ netstat -nabo 1 | find "<IPADDR or PORT>"
 ```
 netsh wlan set hostednetwork mode=allow ssid=<MYSSID> key=<MYPASSWORD> && netsh wlan start hostednetwork
 ```
+
+### Minifilter Driver Management Operations and Troubleshooting
+Used to load and unload minifilter drivers, attach minifilter drivers to volumes or detach them from volumes, and enumerate minifilter drivers, instances, and volumes. I once had an issue where Sysmon and a particular EDR product weren't playing well together; this tool assisted the investigation.  
+[Great reference / writeup here](https://blogs.msdn.microsoft.com/ntdebugging/2013/03/25/understanding-file-system-minifilter-and-legacy-filter-load-order)
