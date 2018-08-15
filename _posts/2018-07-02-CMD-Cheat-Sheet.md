@@ -21,7 +21,7 @@ This page is a command reference for various blue and red team tactics and techn
 [Netstat Hacks](#netstat-hacks)  
 [Sneaky Evil Hacks](#sneaky-evil-hacks)  
 [Configure Windows host as WPA2-PSK Access Point](#configure-windows-host-as-wpa2-psk-access-point)  
-[Minifilter Driver Management Operations and Troubleshooting](#minifilter-driver-management-operations-and-troubleshooting)
+[Minifilter Driver Management Operations and Troubleshooting Using fltmc](#minifilter-driver-management-operations-and-troubleshooting-using-fltmc)
 
 # Remote Access
 ### Map admin share using net.exe
@@ -136,7 +136,7 @@ Additionally, the GUI version of Autoruns is also available, but I prefer the CL
 - Green - Used when comparing against a previous set of Autoruns data highlight items that weren't already there.
 - Yellow - The startup entry is there, but the file or job it points to doesn't exist anymore.   
 
-[Great Autoruns GUI reference / writeup here](https://blogs.msdn.microsoft.com/ntdebugging/2013/03/25/understanding-file-system-minifilter-and-legacy-filter-load-order)
+[Great Autoruns GUI reference / writeup here](https://www.howtogeek.com/school/sysinternals-pro/lesson6/)
 
 ### WMIC Process Listing
 ```
@@ -156,5 +156,16 @@ netsh wlan set hostednetwork mode=allow ssid=<MYSSID> key=<MYPASSWORD> && netsh 
 ```
 
 ### Minifilter Driver Management Operations and Troubleshooting
-Used to load and unload minifilter drivers, attach minifilter drivers to volumes or detach them from volumes, and enumerate minifilter drivers, instances, and volumes. I once had an issue where Sysmon and a particular EDR product weren't playing well together; this tool assisted the investigation.  
-[Great reference / writeup here](https://blogs.msdn.microsoft.com/ntdebugging/2013/03/25/understanding-file-system-minifilter-and-legacy-filter-load-order)
+Used to load and unload minifilter drivers, attach minifilter drivers to volumes or detach them from volumes, and enumerate minifilter drivers, instances, and volumes. I once had an issue where Sysmon and a particular EDR product weren't playing well together; this tool assisted the investigation.   
+```
+fltmc help
+Valid commands:
+    load        Loads a Filter driver
+    unload      Unloads a Filter driver
+    filters     Lists the Filters currently registered in the system
+    instances   Lists the Instances for a Filter or Volume currently registered in the system
+    volumes     Lists all volumes/RDRs in the system
+    attach      Creates a Filter Instance to a Volume
+    detach      Removes a Filter Instance from a Volume
+```
+[Great fltmc.exe reference / writeup here](https://blogs.msdn.microsoft.com/ntdebugging/2013/03/25/understanding-file-system-minifilter-and-legacy-filter-load-order)
