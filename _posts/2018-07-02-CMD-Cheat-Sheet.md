@@ -135,6 +135,7 @@ Additionally, the GUI version of Autoruns is also available, but I prefer the CL
 - Pink - No publisher information was found, or if code verification is on, the digital signature either doesn't exist, or doesn't match, or there is no publisher information.
 - Green - Used when comparing against a previous set of Autoruns data highlight items that weren't already there.
 - Yellow - The startup entry is there, but the file or job it points to doesn't exist anymore.   
+
 [Great Autoruns GUI reference / writeup here](https://blogs.msdn.microsoft.com/ntdebugging/2013/03/25/understanding-file-system-minifilter-and-legacy-filter-load-order)
 
 ### WMIC Process Listing
