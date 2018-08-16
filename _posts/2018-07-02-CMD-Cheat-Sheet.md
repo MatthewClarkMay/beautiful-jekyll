@@ -144,7 +144,7 @@ C:\> autorunsc.exe -accepteula [options] > autoruns.csv
 -ct            Print output as tab-delimited values
 -x             Print output as XML
 
--vt            Accept VirutTotal terms of service
+-vt            Accept VirusTotal terms of service
 -v[rs]         Query VirusTotal based on file hash
    r           Opens reports for files with non-zero detection
    s           Uploads files that have never been seen by VirusTotal
@@ -155,6 +155,8 @@ C:\> autorunsc.exe -accepteula [options] > autoruns.csv
 
 Example:
 autorunsc.exe -accepteula -a * -h -s -c -vr > autoruns.csv
+
+# NOTE: The first time you run autorunsc.exe with VirusTotal flags it will open a browser displaying their terms and conditions. The terminal will display "Enter 'y' to agree:", so don't redirect to a csv file the first time you run it or you won't be able to enter y.
 ```
 Additionally, the GUI version of Autoruns is also available, but I prefer the CLI version because it enables you to programmatically manipulate output. The GUI output includes color coordination - The colors mean the following.
 - Pink - No publisher information was found, or if code verification is on, the digital signature either doesn't exist, or doesn't match, or there is no publisher information.
