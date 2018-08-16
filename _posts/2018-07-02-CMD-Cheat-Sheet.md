@@ -13,6 +13,8 @@ This page is a command reference for various blue and red team tactics and techn
 [Service Investigation](#service-investigation)  
 [WMIEvtConsumers](#wmievtconsumers)  
 [WMIC Remote Process Creation](#wmic-remote-process-creation)  
+[WMIC System Arch and Resource Queries](#wmic-system-arch-and-resource-queries)
+[Convert SID to Username With PowerShell](#convert-sid-to-username-with-powershell)
 [PowerShell Remoting](#powershell-remoting)  
 [Kansa](#kansa)  
 [Hunting Persistent Malware](#hunting-persistent-malware)  
@@ -22,6 +24,7 @@ This page is a command reference for various blue and red team tactics and techn
 [Sneaky Evil Hacks](#sneaky-evil-hacks)  
 [Configure Windows host as WPA2-PSK Access Point](#configure-windows-host-as-wpa2-psk-access-point)  
 [Minifilter Driver Management Operations and Troubleshooting Using fltmc](#minifilter-driver-management-operations-and-troubleshooting-using-fltmc)
+[Delete Directory With CB Response Go-Live](#delete-directory-with-cb-response-go-live)
 
 # Remote Access
 ### Map admin share using net.exe
@@ -64,6 +67,19 @@ If service keeps crashing then check that services recovery options - could be r
 ```
 wmic /node:host process call create "malware.exe"
 Invoke-WmiMethod -Computer host -Class Win32_Process -Name create -Argument "c:\temp\malware.exe"
+```
+
+### WMIC System Arch and Resource Queries
+```
+# Query total system memory
+wmic computersystem get TotalPhysicalMemory
+# Query OS architecture
+wmic OS get OSArchitecture
+```   
+
+### Convert SID to Username With PowerShell
+```
+([System.Security.Principal.SecurityIdentifier]($SID)).Translate([System.Security.Principal.NTAccount]).Value 
 ```
 
 ### PowerShell Remoting
@@ -171,3 +187,8 @@ Valid commands:
     detach      Removes a Filter Instance from a Volume
 ```
 [Great fltmc.exe reference / writeup](https://blogs.msdn.microsoft.com/ntdebugging/2013/03/25/understanding-file-system-minifilter-and-legacy-filter-load-order)
+
+### Delete Directory With CB Response Go-Live
+```
+execfg cmd /c rd /s /q $DIRECTORY
+```
