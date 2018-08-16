@@ -18,7 +18,7 @@ This page is a command reference for various blue and red team tactics and techn
 [Convert SID to Username With PowerShell](#convert-sid-to-username-with-powershell)   
 [PowerShell Remoting](#powershell-remoting)  
 [Kansa](#kansa)  
-[Delete Directory With CB Response Go-Live](#delete-directory-with-cb-response-go-live)
+[Delete Directory With CB Response Go-Live](#delete-directory-with-cb-response-go-live)   
 [Hunting Persistent Malware](#hunting-persistent-malware)  
 [Autoruns](#autoruns)  
 [Minifilter Driver Management Operations and Troubleshooting Using fltmc](#minifilter-driver-management-operations-and-troubleshooting-using-fltmc)   
