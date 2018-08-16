@@ -136,7 +136,7 @@ Additionally, the GUI version of Autoruns is also available, but I prefer the CL
 - Green - Used when comparing against a previous set of Autoruns data highlight items that weren't already there.
 - Yellow - The startup entry is there, but the file or job it points to doesn't exist anymore.   
 
-[SANS Autoruns writeup](https://sans.org/reading-room/whitepapers/malicious/utilizing-autoruns-catch-malware-33383)
+[SANS Autoruns writeup](https://sans.org/reading-room/whitepapers/malicious/utilizing-autoruns-catch-malware-33383)   
 [HowToGeek Autoruns GUI reference / writeup](https://www.howtogeek.com/school/sysinternals-pro/lesson6/)
 
 ### WMIC Process Listing
@@ -170,4 +170,4 @@ Valid commands:
     attach      Creates a Filter Instance to a Volume
     detach      Removes a Filter Instance from a Volume
 ```
-[Great fltmc.exe reference / writeup here](https://blogs.msdn.microsoft.com/ntdebugging/2013/03/25/understanding-file-system-minifilter-and-legacy-filter-load-order)
+[Great fltmc.exe reference / writeup](https://blogs.msdn.microsoft.com/ntdebugging/2013/03/25/understanding-file-system-minifilter-and-legacy-filter-load-order)
