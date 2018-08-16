@@ -157,6 +157,10 @@ Example:
 autorunsc.exe -accepteula -a * -h -s -c -vr > autoruns.csv
 
 # NOTE: The first time you run autorunsc.exe with VirusTotal flags it will open a browser displaying their terms and conditions. The terminal will display "Enter 'y' to agree:", so don't redirect to a csv file the first time you run it or you won't be able to enter y.
+# ANOTHER NOTE: when analyzing offline systems there are a few idiosyncrasies to be aware of
+    # Always run from an Administrator shell
+    # Always mount your image with WRITE options or the program won't be able to load certain hives
+    # For some reason even if the image is mounted with WRITE options, and autorunsc.exe is run as Administrator, it will report that it can't load the SOFTWARE hive. If I open the image in Autoruns.exe (the GUI version) and then try autorunsc.exe again, it runs... *shrugs*
 ```
 Additionally, the GUI version of Autoruns is also available, but I prefer the CLI version because it enables you to programmatically manipulate output. The GUI output includes color coordination - The colors mean the following.
 - Pink - No publisher information was found, or if code verification is on, the digital signature either doesn't exist, or doesn't match, or there is no publisher information.
