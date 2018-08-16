@@ -13,19 +13,18 @@ This page is a command reference for various blue and red team tactics and techn
 [Service Investigation](#service-investigation)  
 [WMIEvtConsumers](#wmievtconsumers)  
 [WMIC Remote Process Creation](#wmic-remote-process-creation)  
-[WMIC System Arch and Resource Queries](#wmic-system-arch-and-resource-queries)
-[Convert SID to Username With PowerShell](#convert-sid-to-username-with-powershell)
+[WMIC Process Listing](#wmic-process-listing)  
+[WMIC System Arch and Resource Queries](#wmic-system-arch-and-resource-queries)   
+[Convert SID to Username With PowerShell](#convert-sid-to-username-with-powershell)   
 [PowerShell Remoting](#powershell-remoting)  
 [Kansa](#kansa)  
+[Delete Directory With CB Response Go-Live](#delete-directory-with-cb-response-go-live)
 [Hunting Persistent Malware](#hunting-persistent-malware)  
 [Autoruns](#autoruns)  
-[WMIC Process Listing](#wmic-process-listing)  
+[Minifilter Driver Management Operations and Troubleshooting Using fltmc](#minifilter-driver-management-operations-and-troubleshooting-using-fltmc)   
 [Netstat Hacks](#netstat-hacks)  
 [Sneaky Evil Hacks](#sneaky-evil-hacks)  
 [Configure Windows host as WPA2-PSK Access Point](#configure-windows-host-as-wpa2-psk-access-point)  
-[Minifilter Driver Management Operations and Troubleshooting Using fltmc](#minifilter-driver-management-operations-and-troubleshooting-using-fltmc)
-[Delete Directory With CB Response Go-Live](#delete-directory-with-cb-response-go-live)
-
 # Remote Access
 ### Map admin share using net.exe
 ```
@@ -69,6 +68,11 @@ wmic /node:host process call create "malware.exe"
 Invoke-WmiMethod -Computer host -Class Win32_Process -Name create -Argument "c:\temp\malware.exe"
 ```
 
+### WMIC Process Listing
+```
+wmic process list full
+```
+
 ### WMIC System Arch and Resource Queries
 ```
 # Query total system memory
@@ -98,6 +102,11 @@ Invoke-Command -ComputerName host -ScriptBlock {Start-Process c:\temp\malware.ex
 
 ### Kansa
 (placeholder)
+
+### Delete Directory With CB Response Go-Live
+```
+execfg cmd /c rd /s /q $DIRECTORY
+```
 
 # Hunting Malware
 
@@ -155,23 +164,6 @@ Additionally, the GUI version of Autoruns is also available, but I prefer the CL
 [SANS Autoruns writeup](https://sans.org/reading-room/whitepapers/malicious/utilizing-autoruns-catch-malware-33383)   
 [HowToGeek Autoruns GUI reference / writeup](https://www.howtogeek.com/school/sysinternals-pro/lesson6/)
 
-### WMIC Process Listing
-```
-wmic process list full
-```
-
-### Netstat Hacks
-```
-netstat -nabo 1 | find "<IPADDR or PORT>"
-```
-
-# Sneaky Evil Hacks
-
-### Configure Windows host as WPA2-PSK Access Point
-```
-netsh wlan set hostednetwork mode=allow ssid=<MYSSID> key=<MYPASSWORD> && netsh wlan start hostednetwork
-```
-
 ### Minifilter Driver Management Operations and Troubleshooting Using fltmc
 Used to load and unload minifilter drivers, attach minifilter drivers to volumes or detach them from volumes, and enumerate minifilter drivers, instances, and volumes. I once had an issue where Sysmon and a particular EDR product weren't playing well together; this tool assisted the investigation.   
 ```
@@ -188,7 +180,14 @@ Valid commands:
 ```
 [Great fltmc.exe reference / writeup](https://blogs.msdn.microsoft.com/ntdebugging/2013/03/25/understanding-file-system-minifilter-and-legacy-filter-load-order)
 
-### Delete Directory With CB Response Go-Live
+### Netstat Hacks
 ```
-execfg cmd /c rd /s /q $DIRECTORY
+netstat -nabo 1 | find "<IPADDR or PORT>"
+```
+
+# Sneaky Evil Hacks
+
+### Configure Windows host as WPA2-PSK Access Point
+```
+netsh wlan set hostednetwork mode=allow ssid=<MYSSID> key=<MYPASSWORD> && netsh wlan start hostednetwork
 ```
