@@ -92,8 +92,8 @@ wmic OS get OSArchitecture
 ```   
 
 ### Remote Scheduled Tasks Listing
-Uses type 3 login
 ```
+# uses type 3 login
 schtasks.exe /S HOSTNAME /FO CSV /v | ConvertFrom-Csv
 ```
 
