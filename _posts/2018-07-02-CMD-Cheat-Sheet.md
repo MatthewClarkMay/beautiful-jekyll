@@ -76,7 +76,10 @@ wmic process list full
 
 ### WMIC Service Listing
 ```
-wmic /node:"HOSTNAME" service where started=true get name,startname
+# Only started services
+wmic /node:"HOSTNAME" service where started=true get name,startname,description /format:csv > started_services.csv
+# All installed serviecs
+wmic /node:"HOSTNAME" service get name,startname,description /format:csv > services.csv
 ```
 
 ### WMIC System Arch and Resource Queries
