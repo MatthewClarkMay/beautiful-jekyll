@@ -225,6 +225,6 @@ netsh wlan set hostednetwork mode=allow ssid=<MYSSID> key=<MYPASSWORD> && netsh 
 
 ### Generate CSR
 ```
-# Need to replace $COUNTRYABVR, $STATEABVR, $ORG, $HOSTNAME
-openssl req -nodes -sha256 -newkey rsa:2048 -keyout domain.key -out domain.csr -subj '/C=$COUNTRYABVR/ST=$STATEABRV/O=$ORG/CN=$HOSTNAME/subjectAltName=DNS.1=$HOSTNAME.domain.com, DNS.2=$HOSTNAME'
+# Need to replace $DOMAIN, $COUNTRYABVR, $STATEABVR, $ORG, $HOSTNAME
+openssl req -nodes -sha256 -newkey rsa:2048 -keyout $DOMAIN.key -out $DOMAIN.csr -subj '/C=$COUNTRYABVR/ST=$STATEABRV/O=$ORG/CN=$HOSTNAME/subjectAltName=DNS.1=$HOSTNAME.domain.com, DNS.2=$HOSTNAME'
 ```
