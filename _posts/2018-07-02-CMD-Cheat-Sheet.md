@@ -16,6 +16,7 @@ This page is a command reference for various blue and red team tactics and techn
 [WMIC Process Listing](#wmic-process-listing)  
 [WMIC Service Listing](#wmic-service-listing)  
 [WMIC System Arch and Resource Queries](#wmic-system-arch-and-resource-queries)   
+[Remote Scheduled Tasks Listing](#remote-scheduled-tasks-listing)  
 [Convert SID to Username With PowerShell](#convert-sid-to-username-with-powershell)   
 [PowerShell Remoting](#powershell-remoting)  
 [Kansa](#kansa)  
@@ -89,6 +90,12 @@ wmic computersystem get TotalPhysicalMemory
 # Query OS architecture
 wmic OS get OSArchitecture
 ```   
+
+### Remote Scheduled Tasks Listing
+Uses type 3 login
+```
+schtasks.exe /S HOSTNAME /FO CSV /v | ConvertFrom-Csv
+```
 
 ### Convert SID to Username With PowerShell
 ```
