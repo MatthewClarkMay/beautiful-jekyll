@@ -27,6 +27,8 @@ This page is a command reference for various blue and red team tactics and techn
 [Netstat Hacks](#netstat-hacks)  
 [Sneaky Evil Hacks](#sneaky-evil-hacks)  
 [Configure Windows host as WPA2-PSK Access Point](#configure-windows-host-as-wpa2-psk-access-point)  
+[General SysAdmin Stuffs](#general-sysadmin-stuffs)
+[Generate CSR](#generate-csr)
 # Remote Access
 ### Map admin share using net.exe
 ```
@@ -217,4 +219,12 @@ netstat -nabo 1 | find "<IPADDR or PORT>"
 ### Configure Windows host as WPA2-PSK Access Point
 ```
 netsh wlan set hostednetwork mode=allow ssid=<MYSSID> key=<MYPASSWORD> && netsh wlan start hostednetwork
+```
+
+# General SysAdmin Stuffs
+
+### Generate CSR
+```
+# Need to replace $COUNTRYABVR, $STATEABVR, $ORG, $HOSTNAME
+openssl req -nodes -sha256 -newkey rsa:2048 -keyout domain.key -out domain.csr -subj '/C=$COUNTRYABVR/ST=$STATEABRV/O=$ORG/CN=$HOSTNAME/subjectAltName=DNS.1=$HOSTNAME.domain.com, DNS.2=$HOSTNAME'
 ```
