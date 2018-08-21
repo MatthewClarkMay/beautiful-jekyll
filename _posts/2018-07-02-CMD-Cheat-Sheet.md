@@ -14,6 +14,7 @@ This page is a command reference for various blue and red team tactics and techn
 [WMIEvtConsumers](#wmievtconsumers)  
 [WMIC Remote Process Creation](#wmic-remote-process-creation)  
 [WMIC Process Listing](#wmic-process-listing)  
+[WMIC Service Listing](#wmic-service-listing)  
 [WMIC System Arch and Resource Queries](#wmic-system-arch-and-resource-queries)   
 [Convert SID to Username With PowerShell](#convert-sid-to-username-with-powershell)   
 [PowerShell Remoting](#powershell-remoting)  
@@ -71,6 +72,11 @@ Invoke-WmiMethod -Computer host -Class Win32_Process -Name create -Argument "c:\
 ### WMIC Process Listing
 ```
 wmic process list full
+```
+
+### WMIC Service Listing
+```
+wmic /node:"HOSTNAME" service where started=true get name,startname
 ```
 
 ### WMIC System Arch and Resource Queries
@@ -154,10 +160,10 @@ C:\> autorunsc.exe -accepteula [options] > autoruns.csv
 -nobanner      Do not display startup messages
 
 # Live System Example:
-C:\> autorunsc.exe -accepteula -a * -h -s -c -vr > autoruns.csv
+C:\> autorunsc.exe -accepteula -a * -h -s -c -m -vr > autoruns.csv
 
 # Offline System Example:
-C:\> autorunsc.exe -accepteula -a * -h -s -c -vr -z 'E:\Windows' 'E:\Users' > autoruns.csv
+C:\> autorunsc.exe -accepteula -a * -h -s -c -m -vr -z 'E:\Windows' 'E:\Users' > autoruns.csv
 
 # NOTE: The first time you run autorunsc.exe with VirusTotal flags it will open a browser displaying their terms and conditions. The terminal will display "Enter 'y' to agree:", so don't redirect to a csv file the first time you run it or you won't be able to enter y.
 # ANOTHER NOTE: when analyzing offline systems there are a few idiosyncrasies to be aware of
