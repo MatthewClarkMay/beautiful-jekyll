@@ -8,7 +8,8 @@ This page is a command reference for various blue and red team tactics and techn
 
 [Remote Access](#remote-access)  
 [Remote Execution](#remote-execution)  
-[Scheduled Task Creation](#scheduled-task-creation)  
+[Scheduled Tasks Creation](#scheduled-task-creation)  
+[Scheduled Tasks Listing](#scheduled-tasks-listing)  
 [Service Creation](#service-creation)  
 [Service Investigation](#service-investigation)  
 [WMIEvtConsumers](#wmievtconsumers)  
@@ -16,7 +17,6 @@ This page is a command reference for various blue and red team tactics and techn
 [WMIC Process Listing](#wmic-process-listing)  
 [WMIC Service Listing](#wmic-service-listing)  
 [WMIC System Arch and Resource Queries](#wmic-system-arch-and-resource-queries)   
-[Remote Scheduled Tasks Listing](#remote-scheduled-tasks-listing)  
 [Convert SID to Username With PowerShell](#convert-sid-to-username-with-powershell)   
 [PowerShell Remoting](#powershell-remoting)  
 [Kansa](#kansa)  
@@ -35,10 +35,18 @@ net use z: \\host\c$ /user:domain\username <password>
 
 # Remote Execution
 
-### Scheduled Task Creation
+### Scheduled Tasks Creation
 ```
+# Deprecated
 at.exe \\host 12:00:00 "c:\temp\maltask.exe"
+# Uses type 3 login
 schtasks.exe /CREATE /TN taskname /TR c:\temp\malware.exe /SC once /RU "SYSTEM" /ST 12:00:00 /S host /U username
+```
+
+### Scheduled Tasks Listing
+```
+# Uses type 3 login
+schtasks.exe /S HOSTNAME /FO CSV /v | ConvertFrom-Csv
 ```
 
 ### Service Creation
@@ -91,11 +99,6 @@ wmic computersystem get TotalPhysicalMemory
 wmic OS get OSArchitecture
 ```   
 
-### Remote Scheduled Tasks Listing
-```
-# uses type 3 login
-schtasks.exe /S HOSTNAME /FO CSV /v | ConvertFrom-Csv
-```
 
 ### Convert SID to Username With PowerShell
 ```
