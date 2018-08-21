@@ -12,11 +12,11 @@ This page is a command reference for various blue and red team tactics and techn
 [Scheduled Tasks Listing](#scheduled-tasks-listing)  
 [Service Creation](#service-creation)  
 [Service Investigation](#service-investigation)  
-[WMIEvtConsumers](#wmievtconsumers)  
+[WMIC Service Listing](#wmic-service-listing)  
 [WMIC Remote Process Creation](#wmic-remote-process-creation)  
 [WMIC Process Listing](#wmic-process-listing)  
-[WMIC Service Listing](#wmic-service-listing)  
 [WMIC System Arch and Resource Queries](#wmic-system-arch-and-resource-queries)   
+[WMIEvtConsumers](#wmievtconsumers)  
 [Convert SID to Username With PowerShell](#convert-sid-to-username-with-powershell)   
 [PowerShell Remoting](#powershell-remoting)  
 [Kansa](#kansa)  
@@ -65,12 +65,13 @@ List services in each svchost block, break a service out of its container, and r
 
 If service keeps crashing then check that services recovery options - could be running another program instead of restarting (Kansa module Get-SvcFail.ps1 useful here)
 
-### WMIEvtConsumers
-- Event Filter = Trigger condition
-- Event Consumer = Script or executable to run
-- Binding = Filter + Consumer
-- Usually saved to .MOF file
-- Triggers can be basically ANYTHING
+### WMIC Service Listing
+```
+# Only started services
+wmic /node:"HOSTNAME" service where started=true get name,startname,description /format:csv > started_services.csv
+# All installed serviecs
+wmic /node:"HOSTNAME" service get name,startname,description /format:csv > services.csv
+```
 
 ### WMIC Remote Process Creation
 ```
@@ -83,14 +84,6 @@ Invoke-WmiMethod -Computer host -Class Win32_Process -Name create -Argument "c:\
 wmic process list full
 ```
 
-### WMIC Service Listing
-```
-# Only started services
-wmic /node:"HOSTNAME" service where started=true get name,startname,description /format:csv > started_services.csv
-# All installed serviecs
-wmic /node:"HOSTNAME" service get name,startname,description /format:csv > services.csv
-```
-
 ### WMIC System Arch and Resource Queries
 ```
 # Query total system memory
@@ -99,6 +92,12 @@ wmic computersystem get TotalPhysicalMemory
 wmic OS get OSArchitecture
 ```   
 
+### WMIEvtConsumers
+- Event Filter = Trigger condition
+- Event Consumer = Script or executable to run
+- Binding = Filter + Consumer
+- Usually saved to .MOF file
+- Triggers can be basically ANYTHING
 
 ### Convert SID to Username With PowerShell
 ```
