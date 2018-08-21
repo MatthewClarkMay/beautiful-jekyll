@@ -27,7 +27,7 @@ This page is a command reference for various blue and red team tactics and techn
 [Netstat Hacks](#netstat-hacks)  
 [Sneaky Evil Hacks](#sneaky-evil-hacks)  
 [Configure Windows host as WPA2-PSK Access Point](#configure-windows-host-as-wpa2-psk-access-point)  
-[General SysAdmin Stuffs](#general-sysadmin-stuffs)
+[General SysAdmin Stuffs](#general-sysadmin-stuffs)   
 [Generate CSR](#generate-csr)
 # Remote Access
 ### Map admin share using net.exe
