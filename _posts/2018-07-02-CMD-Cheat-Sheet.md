@@ -224,7 +224,26 @@ netsh wlan set hostednetwork mode=allow ssid=<MYSSID> key=<MYPASSWORD> && netsh 
 # General SysAdmin Stuffs
 
 ### Generate CSR
+Add the following to a config file (san.cnf)
 ```
-# Need to replace $DOMAIN, $COUNTRYABVR, $STATEABVR, $ORG, $HOSTNAME
-openssl req -nodes -sha256 -newkey rsa:2048 -keyout $DOMAIN.key -out $DOMAIN.csr -subj '/C=$COUNTRYABVR/ST=$STATEABRV/O=$ORG/CN=$HOSTNAME/subjectAltName=DNS.1=$HOSTNAME.domain.com, DNS.2=$HOSTNAME'
+[ req ]
+default_bits       = 2048
+distinguished_name = req_distinguished_name
+req_extensions     = req_ext
+[ req_distinguished_name ]
+countryName                 = Country Name (2 letter code)
+stateOrProvinceName         = State or Province Name (full name)
+localityName               = Locality Name (eg, city)
+organizationName           = Organization Name (eg, company)
+commonName                 = Common Name (e.g. server FQDN or YOUR name)
+[ req_ext ]
+subjectAltName = @alt_names
+[alt_names]
+DNS.1   = hostname
+DNS.2   = hostname.domain.com
+```
+Run the following command
+```
+# Replace the following variables respectively: $DOMAIN, $COUNTRYABRV, $STATEABRV, $ORG, $HOSTNAME
+openssl req -out $DOMAIN.csr -newkey rsa:2048 -nodes -keyout $DOMAIN.key -config san.cnf -subj '/C=$COUNTRYABRV/ST=$STATEABRV/O=$ORG/CN=$HOSTNAME.$DOMAIN.com'
 ```
